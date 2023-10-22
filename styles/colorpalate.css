@@ -1,0 +1,13 @@
+/* CSS HEX */
+--resolution-blue: #0f2595ff;
+--persian-blue: #1430b8ff;
+--neon-blue: #4561edff;
+--vista-blue: #90a0f4ff;
+--magnolia: #eceffdff;
+
+/* CSS HSL */
+--resolution-blue: hsla(230, 82%, 32%, 1);
+--persian-blue: hsla(230, 80%, 40%, 1);
+--neon-blue: hsla(230, 82%, 60%, 1);
+--vista-blue: hsla(230, 82%, 76%, 1);
+--magnolia: hsla(229, 81%, 96%, 1);

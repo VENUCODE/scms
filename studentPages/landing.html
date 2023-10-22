@@ -1,0 +1,212 @@
+<style>
+    :root {
+        --white: #dfdfdf;
+        --font_main: "Comfortaa", sans-serif;
+        --main_gray: black;
+        --secondary_gray: #074982;
+    }
+
+    body {
+        margin: 0;
+        font-family: var(--font_main);
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    canvas {
+        display: block;
+    }
+
+    .hero {
+        position: absolute;
+        top: 35%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        color: var(--main_gray);
+        white-space: nowrap;
+    }
+
+    .hero h2 {
+        font-size: 2.8rem;
+        font-weight: 500;
+        color: var(--secondary_gray);
+    }
+
+    /* ---- particles.js container ---- */
+
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(99 102 241);
+        background-image: url("BG.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-blend-mode: screen;
+    }
+
+    /*=============================================
+=            MEDIA QUERY            =
+=============================================*/
+
+    @media screen and (max-width: 992px) {
+        .hero h1 {
+            font-size: 3rem;
+            white-space: normal;
+        }
+
+        .hero h2 {
+            font-size: 1.9rem;
+            color: white;
+        }
+    }
+</style>
+
+<body>
+    <div id="particles-js">
+        <section class="hero">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h1>Hassel Halt</h1>
+                        <h2>No more obstacles</h2>
+                     
+                    </div>
+                    <div class="col-lg-4"></div>
+                </div>
+            </div>
+        </section>
+    </div><!-- .particles.js container -->
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js",
+        {
+  "particles": {
+    "number": {
+      "value": 173,
+      "density": {
+        "enable": false,
+        "value_area": 2080
+      }
+    },
+    "color": {
+      "value": "#ffffff"
+    },
+    "shape": {
+      "type": "circle",
+      "stroke": {
+        "width": 0,
+        "color": "#000000"
+      },
+      "polygon": {
+        "nb_sides": 10
+      },
+   
+    },
+    "opacity": {
+      "value": 0.7,
+      "random": true,
+      "anim": {
+        "enable": false,
+        "speed": 1,
+        "opacity_min": 0.1,
+        "sync": false
+      }
+    },
+    "size": {
+      "value": 6,
+      "random": true,
+      "anim": {
+        "enable": false,
+        "speed": 40,
+        "size_min": 0.1,
+        "sync": false
+      }
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 150,
+      "color": "#ffffff",
+      "opacity": 0.3,
+      "width": 1
+    },
+    "move": {
+      "enable": true,
+      "speed": 9,
+      "direction": "none",
+      "random": false,
+      "straight": false,
+      "out_mode": "out",
+      "bounce": false,
+      "attract": {
+        "enable": false,
+        "rotateX": 600,
+        "rotateY": 1200
+      }
+    }
+  },
+  "interactivity": {
+    "detect_on": "window",
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode": "repulse"
+      },
+      "onclick": {
+        "enable": true,
+        "mode": "push"
+      },
+      "resize": true
+    },
+    "modes": {
+      "grab": {
+        "distance": 400,
+        "line_linked": {
+          "opacity": 1
+        }
+      },
+      "bubble": {
+        "distance": 400,
+        "size": 40,
+        "duration": 2,
+        "opacity": 8,
+        "speed": 3
+      },
+      "repulse": {
+        "distance": 100,
+        "duration": 0.4
+      },
+      "push": {
+        "particles_nb": 4
+      },
+      "remove": {
+        "particles_nb": 2
+      }
+    }
+  },
+  "retina_detect": true
+}
+        );
+
+
+    </script>
+</body>

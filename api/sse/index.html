@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTime data</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div id="container">
+        <table border="">
+            <thead>
+                <tr>
+                   
+                    <th>ID_NUMBER</th>
+                    <th>NAME</th>
+                    <th>GENDER</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const HandleDelete = (id_number) => {
+                      $.ajax({
+              url: 'delete.php',
+              type: 'POST',
+              data: { id_number:id_number }, 
+    
+              beforeSend:()=>{console.log("Sending....")},
+              complete:()=>console.log("Completed"),
+              success: function (response) {
+
+                console.log(response);
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                console.error("Ajax request failed: " + errorThrown);
+              }
+            });
+          };
+          
+        var source=new EventSource('fetch.php');
+        source.onmessage=(e)=>{
+            var data=JSON.parse(e.data);
+            const cont=document.querySelector('tbody');
+            cont.innerHTML='';
+            data.forEach(e=>{
+                cont.innerHTML+=` 
+                <tr>
+            
+                    <td>${e.ID_NUMBER}</td>
+                    <td>${e.SNAME}</td>
+                    <td>${e.GENDER}</td>
+                    <td><button id='${e.ID_NUMBER}' style='background-color:red;color:white;font-weight:800'class='del-button'>Delete</button></td>
+                </tr>`;
+            })
+            var delete_buttons = document.getElementsByClassName('del-button');
+            Array.from(delete_buttons).forEach((item) => {
+                item.addEventListener('click', (e) => {
+                  HandleDelete(e.currentTarget.id);
+                });
+              });
+        }
+
+    </script>
+</body>
+</html>

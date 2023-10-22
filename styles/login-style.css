@@ -1,0 +1,49 @@
+.login-form{
+    max-width:350px ;
+    position: relative;
+}
+.bg-form{
+    background-color: rgba(255, 255, 255, 0.338);
+}
+body{
+ background-color: var(--bg-2)
+}
+:root{
+--bg-5: rgb(42, 8, 96);
+--bg-4: rgb(88, 20, 184);
+--bg-3: #4561edff;
+--bg-2: rgb(163, 176, 243);
+--bg-1: #eceffdff;
+}
+}
+#login-icons >div>img{
+  transition: 1s ;
+  height: 40px;
+  width: 40px;
+  padding: 3px;
+
+max-width:50px;
+min-width:30%;
+  border-radius: 20px;
+  display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#login-icons{
+  color: #4561edff;
+  border-radius: 10px;
+  width:100%;
+  max-width:1449px;
+  /*box-shadow: inset 0px 0px 10px white,inset -2px -2px 10px var(--bg-5);*/
+  background-color:white;
+}
+#login-icons >div:hover img  {
+      transform: scale(1.1);
+}
+#login-form{
+  display: none;
+
+}
+.bg-navbar{
+  background-color: var(--bg-5);
+}
