@@ -8,7 +8,7 @@ include("../connection.php");
 $data=array();
 if($conn && isset($_POST['complaintId'])){
     $CID=$_POST['complaintId'];
-    $sql="SELECT `CID`, `DESCRIPTION`, `CTYPE`, `RAISED_ID`, `RAISED_ON`, `RESPONSE_STATUS`, `REPORT_STATUS`, `CONFIRMATION_STATUS`, `SOLVED_BY` FROM `COMPLAINTS` WHERE CID='{$CID}'";
+    $sql="SELECT `CID`, `DESCRIPTION`, `CTYPE`, `RAISED_ID`, DATE_FORMAT(`RAISED_ON`, '%d/%m/%y %h:%i %p') as 'RAISED_ON', `RESPONSE_STATUS`, `REPORT_STATUS`, `CONFIRMATION_STATUS`, `SOLVED_BY` FROM `COMPLAINTS` WHERE CID='{$CID}'";
     $result=mysqli_query($conn,$sql);
     if($result){
         $data=mysqli_fetch_assoc($result);

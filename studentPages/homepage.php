@@ -97,7 +97,7 @@
                                                 </a>
                                             </li>
                                             <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link" href="solved.html" target="content_frame">
+                                                <a class="nav-link" href="SOLVED.html" target="content_frame">
                                                     <i class="fas fa-check"></i> SOLVED
                                                 </a>
                                             </li>

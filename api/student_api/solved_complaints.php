@@ -11,7 +11,7 @@ if (isset($_SESSION['sid']) && $conn) {
     while(true) {
         $sql = "SELECT (@row_number := @row_number + 1) AS SNO, `CID`, `DESCRIPTION`, `CTYPE`, DATE_FORMAT(`RAISED_ON`, '%d/%m/%y %h:%i %p') AS RAISE_DATE 
             FROM `COMPLAINTS`, (SELECT @row_number := 0) AS t 
-            WHERE  `RAISED_ID` = '" . $_SESSION['sid'] . "' 
+            WHERE  `RAISED_ID` = '" . $_SESSION['sid'] . "' AND  AND `RESPONSE_STATUS`='TRUE' AND `CONFIRMATION_STATUS`='TRUE'
             ORDER BY `RAISE_DATE` DESC";
             
         $result = mysqli_query($conn, $sql);
