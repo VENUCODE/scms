@@ -87,12 +87,12 @@
 
                                         <ul class="dropdown-menu border-0 " aria-labelledby="alerts">
                                             <li class="dropdown-item nav-item   text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link " href="pending.html" target="content_frame">
+                                                <a class="nav-link " href="Pending.html" target="content_frame">
                                                     <i class="fas fa-home"></i> PENDING
                                                 </a>
                                             </li>
                                             <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link" href="reported.html" target="content_frame">
+                                                <a class="nav-link" href="Reported.html" target="content_frame">
                                                     <i class="fas fa-clock"></i> REPORTED
                                                 </a>
                                             </li>

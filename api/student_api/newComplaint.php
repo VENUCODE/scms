@@ -3,7 +3,6 @@ session_start();
 
 if (isset($_SESSION['sid']) && $_SESSION['usermode'] == 'STUDENT') {
     include("../connection.php");
-    sleep(4);
     if ($conn) {
         if (isset($_POST['complaintDetails'])) {
             $compType = $_POST['complaintType'];

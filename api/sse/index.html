@@ -47,14 +47,14 @@
             var data=JSON.parse(e.data);
             const cont=document.querySelector('tbody');
             cont.innerHTML='';
+            console.log(data)
             data.forEach(e=>{
                 cont.innerHTML+=` 
                 <tr>
-            
-                    <td>${e.ID_NUMBER}</td>
-                    <td>${e.SNAME}</td>
-                    <td>${e.GENDER}</td>
-                    <td><button id='${e.ID_NUMBER}' style='background-color:red;color:white;font-weight:800'class='del-button'>Delete</button></td>
+                    <td>${e.RAISED_ID}</td>
+                    <td>${e.DESCRIPTION}</td>
+                    <td>${e.RAISED_ON}</td>
+                    <td><button id='${e.CID}' style='background-color:red;color:white;font-weight:800'class='del-button'>Delete</button></td>
                 </tr>`;
             })
             var delete_buttons = document.getElementsByClassName('del-button');
