@@ -3,23 +3,23 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
-<div>
+<div class="w-full">
   <div class="modal fade " id="showDetails" data-bs-backdrop="true" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
-        <div class="modal-header text-indigo-50 bg-indigo-700">
-          <h1 class="modal-title text-md text-indigo-300" >
-            CATEGORY: <span id="detailType" class="uppercase text-indigo-100"></span>
+        <div class="modal-header text-gray-50 bg-gray-700">
+          <h1 class="modal-title text-md text-gray-300" >
+            CATEGORY: <span id="detailType" class="uppercase text-gray-100"></span>
           </h1>
           <button type="button" class="btn-close " id="detailDismiss" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body bg-indigo-200">
-          <div id="dateRaised" class="bg-indigo-200 text-indigo-600 font-bolder"></div>
+        <div class="modal-body bg-gray-200">
+          <div id="dateRaised" class="bg-gray-200 text-gray-600 font-bolder"></div>
           <hr>
           <hr>
-          <div class="mt-2 bg-indigo-300 rounded-md px-3 py-3 ">
+          <div class="mt-2 bg-gray-300 rounded-md px-3 py-3 ">
             <p class="font-bold">Description:</p><hr>
-            <p id="complaintDescription" class="text-md font-medium px-2 py-3 text-indigo-800 whitespace-nowrap first-letter:uppercase"></p>
+            <p id="complaintDescription" class="text-md font-medium px-2 py-3 text-gray-800 whitespace-nowrap first-letter:uppercase"></p>
           </>
         </div>
         <!-- <div class="modal-footer justify-around px-2 ">
@@ -30,7 +30,9 @@
     </div>
   </div>
 </div>
-<table data-bs-theme="dark" class='mx-auto  w-full px-1 max-sm:mx-1 max-md:mx-1   text-sm text-left text-gray-500 dark:text-gray-400"' >
+<div class="flex items-center justify-center flex-col relative ">
+<div class="sticky flex-1 top-0 py-2 w-full    mx-2 my-3 rounded-3 text-center uppercase  bg-gray-200 text-ornage-900 font-bolder">PENDING COMPLAINTS</div>
+<table data-bs-theme="dark" class=' w-full relative max-sm:mx-1 max-md:mx-3   text-sm text-left text-gray-500 dark:text-gray-400"' >
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr >
       <th scope="col" class="max-sm:px-1 px-4  py-3">SNO</th>
@@ -43,7 +45,7 @@
 <tbody id='list-items'>
 </tbody>
 </table>
-
+</div>
 <script>
   const handleViewComplaint = (id) => {
     $.ajax({
@@ -57,7 +59,7 @@ success: function (data) {
       data=JSON.parse(data);
       if(data.status){
         $('#detailType').html(data.CTYPE);
-        $('#dateRaised').html(`<h4 class='text-indigo-900'><span class='text-indigo-600'> RAISED ON: </span>${data.RAISED_ON}</h4>`);
+        $('#dateRaised').html(`<h4 class='text-gray-900'><span class='text-gray-600'> RAISED ON: </span>${data.RAISED_ON}</h4>`);
         $('#complaintDescription').html(data.DESCRIPTION);
       }
 },
