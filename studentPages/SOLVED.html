@@ -68,7 +68,7 @@ window.parent.console.error("Ajax request failed: " + errorThrown);
 }
 });
 };
-var source=new EventSource('../api/student_api/pending_complaints.php');
+var source=new EventSource('../api/student_api/solved_complaints.php');
         source.onmessage=(e)=>{
 
             var data=JSON.parse(e.data);
