@@ -10,8 +10,8 @@
   crossorigin="anonymous"
 ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
-<div class="w-full max-md:px-2 max-sm:px-1 px-3 bg-teal-100">
 <div class="w-full">
   <div
     class="modal fade"
@@ -23,33 +23,50 @@
   >
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
-        <div class="modal-header text-lime-50 bg-lime-700">
-          <h1 class="modal-title text-md text-lime-300">
+        <div class="modal-header text-indigo-50 bg-indigo-700">
+          <h1 class="modal-title text-md text-indigo-300">
             CATEGORY:
-            <span id="detailType" class="uppercase text-lime-100"></span>
+            <span id="detailType" class="uppercase text-indigo-100"></span>
           </h1>
           <button
             type="button"
-            class="px-2 hover:text-slate-100 text-slate-900"
+            class="btn-close"
             id="detailDismiss"
             data-bs-dismiss="modal"
-            aria-label="Close"><span class="text-[35px]  font-bolder ">&#215;</span></button>
+            aria-label="Close"
+          ></button>
         </div>
-        <div class="modal-body bg-lime-200">
+        <div class="modal-body bg-indigo-200">
           <div
             id="dateRaised"
-            class="bg-lime-200 text-lime-600 font-bolder"
+            class="bg-indigo-200 text-indigo-600 font-bolder"
           ></div>
           <hr />
           <hr />
-          <div class="mt-2 bg-lime-300 rounded-md px-3 py-3">
+          <div class="mt-2 bg-indigo-300 rounded-md px-3 py-3">
             <p class="font-bold">Description:</p>
             <hr />
             <p
               id="complaintDescription"
-              class="text-md font-medium px-2 py-3 text-lime-800 whitespace-nowrap first-letter:uppercase"
+              class="text-md font-medium px-2 py-3 text-indigo-800 whitespace-nowrap first-letter:uppercase"
             ></p>
           </div>
+        </div>
+        <div class="modal-footer justify-around px-2">
+          <button
+            type="button"
+            class="btn bg-amber-200 text-amber-700 hover:bg-amber-900 hover:text-amber-100"
+            data-bs-dismiss="modal"
+          >
+            NOT SOLVED
+          </button>
+          <button
+            type="button"
+            id="solve_confirmation"
+            class="btn bg-emerald-200 text-emerald-600 hover:bg-emerald-600 hover:text-emerald-100 hover:shadow"
+          >
+            SOLVED
+          </button>
         </div>
       </div>
     </div>
@@ -57,16 +74,16 @@
 </div>
 <div class="flex items-center justify-center flex-col relative">
   <div
-    class="sticky flex-1 top-0 py-2 w-full mx-2 my-3 rounded-3 text-center uppercase bg-teal-200 text-ornage-900 font-bolder"
+    class="sticky flex-1 top-0 py-2 w-full mx-2 my-3 rounded-3 text-center uppercase bg-indigo-200 text-ornage-900 font-bolder"
   >
-    SOLVED COMPLAINTS
+    RECENT UPDATES
   </div>
   <table
-    style="transition: 1s ease"
-    class="w-full relative max-sm:mx-1 max-md:mx-3 text-sm text-left text-teal-500 dark:text-teal-400&quot;"
+    data-bs-theme="dark"
+    class="w-full relative max-sm:mx-1 max-md:mx-3 text-sm text-left text-indigo-500 dark:text-indigo-400&quot;"
   >
     <thead
-      class="text-xs text-teal-700 uppercase bg-teal-50 dark:bg-teal-700 dark:text-teal-400"
+      class="text-xs text-indigo-700 uppercase bg-indigo-50 dark:bg-indigo-700 dark:text-indigo-400"
     >
       <tr>
         <th scope="col" class="max-sm:px-1 px-4 py-3">SNO</th>
@@ -79,14 +96,12 @@
     <tbody id="list-items"></tbody>
   </table>
 </div>
-</div>
 <script>
   const handleViewComplaint = (id) => {
     $.ajax({
       url: "../api/commonApi/complaintDetails.php",
       type: "POST",
       data: { complaintId: id },
-
       beforeSend: () => {
         window.parent.console.log("Sending....");
       },
@@ -96,9 +111,10 @@
         if (data.status) {
           $("#detailType").html(data.CTYPE);
           $("#dateRaised").html(
-            `<h4 class='text-lime-900'><span class='text-lime-600'> RAISED ON: </span>${data.RAISED_ON}</h4>`
+            `<h4 class='text-indigo-900'><span class='text-indigo-600'> RAISED ON: </span>${data.RAISED_ON}</h4>`
           );
           $("#complaintDescription").html(data.DESCRIPTION);
+          $("#solve_confirmation").data("cid", data.CID);
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -106,7 +122,7 @@
       },
     });
   };
-  var source = new EventSource("../api/student_api/solved_complaints.php");
+  var source = new EventSource("../api/student_api/alerts.php");
   source.onmessage = (e) => {
     var data = JSON.parse(e.data);
     window.parent.console.log(data);
@@ -114,20 +130,19 @@
     cont.innerHTML = "";
     data.forEach((e) => {
       cont.innerHTML += ` 
-                <tr class="bg-teal-50 text-teal-300 border-b dark:bg-teal-800 dark:border-teal-700">
-                  <th scope="row" class="px-1 py-4 font-medium text-center text-teal-100 whitespace-nowrap dark:text-white">${e.SNO}</th>
+                <tr class="bg-indigo-50 text-indigo-300 border-b dark:bg-indigo-800 dark:border-indigo-700">
+                  <th scope="row" class="px-1 py-4 font-medium text-center text-indigo-100 whitespace-nowrap dark:text-white">${e.SNO}</th>
                   <td class="max-sm:px-1 px-4 py-4 first-letter:uppercase">${e.CTYPE}</td>
                   <td class="max-sm:px-1 px-4 py-4 truncate ... first-letter:uppercase"> ${e.DESCRIPTION}</td>
                   <td class="max-sm:px-1 px-4 py-4">${e.RAISE_DATE}</td>
                   <td class="max-sm:px-1 px-4 py-4">
-                  <button id="${e.CID}" data-bs-toggle="modal" data-bs-target="#showDetails" class='details bg-teal-500 text-slate-200 maxsm:px-1 px-4 py-1 hover:bg-teal-600 hover:text-slate-100 rounded-sm hover:shadow-sm rounded-sm'>VIEW</button>
+                  <button id="${e.CID}" data-bs-toggle="modal" data-bs-target="#showDetails" class='details bg-indigo-500 text-slate-200 maxsm:px-1 px-4 py-1 hover:bg-indigo-600 hover:text-slate-100 rounded-sm hover:shadow-sm rounded-sm'>VIEW</button>
                   </td>
                   </tr>`;
     });
     var delete_buttons = document.getElementsByClassName("details");
     Array.from(delete_buttons).forEach((item) => {
       item.addEventListener("click", (e) => {
-        window.parent.console.log(e.currentTarget.id);
         handleViewComplaint(e.currentTarget.id);
       });
     });
@@ -136,5 +151,45 @@
     $("#detailType").html("");
     $("#dateRaised").html("");
     $("#complaintDescription").html("");
+  });
+  // function to confirm complaint solved
+  const complaintSolved = (cid) => {
+    $.ajax({
+      url: "../api/student_api/complaintSolved.php",
+      type: "POST",
+      data: { cid: cid },
+      dataType:'json',
+      beforeSend: () => {
+        // Show loading indicator here
+        swal({
+          title: "CONFIRMING....",
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          button: false,
+          icon: "../imgs/loading.svg",
+        });
+      },
+      complete: () => {
+        swal.close();
+      },
+      success: function (data) {
+        swal({
+          text: data.text,
+          icon: data.icon,
+          timer: 1200,
+          button: false,
+        });
+        $("#detailDismiss").click();
+
+      },
+      error: function (err) {
+        window.parent.console.log(err);
+      },
+    });
+  };
+  //triggering confirmation
+  $("#solve_confirmation").on("click", function () {
+    var cid = $(this).data("cid");
+    complaintSolved(cid);
   });
 </script>

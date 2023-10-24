@@ -72,7 +72,7 @@
                                 </li>
                                 <li class="nav-item " data-bs-dismiss="offcanvas">
                                     <a class="nav-link " aria-current="page" target="content_frame"
-                                        href="profile.php"><i class="fas fa-user"></i> Profile</a>
+                                        href="profile.html"><i class="fas fa-user"></i> Profile</a>
                                 </li>
                                 <li class="nav-item " data-bs-dismiss="offcanvas" onclick="Logout()">
                                     <a class="nav-link " aria-current="page"><i class="fas fa-sign-out-alt"></i>
@@ -103,7 +103,7 @@
                                             </li>
 
                                             <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link" href="alerts.html" target="content_frame">
+                                                <a class="nav-link" href="Alerts.html" target="content_frame">
                                                     <i class="fas fa-bell"></i> Alerts
                                                 </a>
                                             </li>
@@ -164,17 +164,4 @@
 
 
 </script>
-<!-------------start of scripts for pending_complaints---------------->
-<!-------------end of scripts for pending_complaints---------------->
-
-<!-------------start of scripts for solved complaints---------------->
-<!-------------end of scripts for solved complaints---------------->
-
-
-<!-------------start of scripts for reported complaints---------------->
-<!-------------end of scripts for reported complaints---------------->
-
-<!-------------start of scripts for profile data ---------------->
-<!-------------end of scripts for profile data---------------->
-
 </html>
