@@ -40,9 +40,8 @@
           <h5 class="text-slate-400 mb-1" id="student_branch"></h5>
           <h5 class="text-slate-400 mb-1" id="student_phone"></h5>
           <br />
-          <br />
           <a
-            href="update.html"
+            href="./update.php"
             target="content_frame"
             class="bg-violet-400 py-2 rounded-md shadow-md px-4 show"
             value="Edit profile"
@@ -52,7 +51,6 @@
       </div>
     </div>
   </div>
-
   <div class="row mx-auto card p-2 shadow-sm bg-sky-100">
     <div
       class="max-md:col-8 min-w-[350px] max-w-[450px] px-2 py-3 flex flex-column"
@@ -69,9 +67,9 @@
   const total = document.getElementById("count_container");
   var source = new EventSource("../api/student_api/student_data.php");
   source.onmessage = (response) => {
-    window.parent.console.log(response)
+    //window.parent.console.log(response);
     var data = JSON.parse(response.data);
-    window.parent.console.log(data);
+    //window.parent.console.log(data);
     name.textContent = data.SNAME;
     idnumber.textContent = data.SID;
     branch.textContent = data.BRANCH;

@@ -161,7 +161,6 @@
       dataType:'json',
       beforeSend: () => {
         // Show loading indicator here
-        console.log('conforming complaint....')
         swal({
           title: "CONFIRMING....",
           allowEscapeKey: false,
@@ -174,7 +173,6 @@
         swal.close();
       },
       success: function (data) {
-        console.log("confirmation done");
         swal({
           text: data.text,
           icon: data.icon,
@@ -192,7 +190,6 @@
   //triggering confirmation
   $("#solve_confirmation").on("click", function () {
     var cid = $(this).data("cid");
-    console.log(cid)
-    //complaintSolved(cid);
+    complaintSolved(cid);
   });
 </script>

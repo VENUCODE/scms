@@ -9,10 +9,10 @@ if (isset($_SESSION['sid']) && $conn) {
     session_write_close();
     $p = '';
     while(true) {
-        $sql = "SELECT (@row_number := @row_number + 1) AS SNO, `CID`, `DESCRIPTION`, `CTYPE`, DATE_FORMAT(`RAISED_ON`, '%d/%m/%y %h:%i %p') AS RAISE_DATE 
-        FROM `COMPLAINTS`, (SELECT @row_number := 0) AS t 
-        WHERE  `RAISED_ID` = '" . $_SESSION['sid'] . " ' AND RESPONSE_STATUS='FALSE'
-        ORDER BY `RAISE_DATE` DESC";
+        $sql = "SELECT (@row_number := @row_number + 1) AS SNO, `CID`, `DESCRIPTION`, `CTYPE`, DATE_FORMAT(`RAISED_ON`, '%d/%m/%y %h:%i %p') AS RAISE_DATE ,DATE_FORMAT(`SOLVED_ON`, '%d/%m/%y %h:%i %p') as SOLVED_DATE
+            FROM `COMPLAINTS`, (SELECT @row_number := 0) AS t 
+            WHERE  `RAISED_ID` = '" . $_SESSION['sid'] . "'  AND `RESPONSE_STATUS`='TRUE' AND `CONFIRMATION_STATUS`='FALSE'
+            ORDER BY `RAISE_DATE` DESC";
             
         $result = mysqli_query($conn, $sql);
         $data = array();    

@@ -1,6 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php 
+    // session_start();
+    // if(!(isset($_SESSION['sid']) && $_SESSION['usermode']=='STUDENT') && time()-$_SESSION[$_SESSION['sid'].'-login_time']>= 1800){
+    // header ('Location: ../api/logout.php');
+    // }
 
+?>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +14,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        clifford: '#da373d',
-                    }
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-          .content-auto {
-            content-visibility: auto;
-          }
-        }
-      </style>
     <link rel="stylesheet" href="navbar.css" />
     <!-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> -->
     <style>
@@ -61,7 +48,6 @@
                 <div>
                     <div class="d-inline fs-4"><a class="navbar-brand" href="index.html"> CMS</a></div>
                 </div>
-                <div class="text-slate-100 text-xl font-bold uppercase">Welfare</div>
                 <div>
                     <div class="navbar-toggler border-0 " type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false"
@@ -77,13 +63,16 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav  gap-2  mb-2 mb-lg-0">
                                 <li class="nav-item " data-bs-dismiss="offcanvas">
-                                    <a class="nav-link " aria-current="page" target="_self" href="homepage.html"><i
+                                    <a class="nav-link " aria-current="page" target="_self" href="homepage.php"><i
                                             class="fas fa-home"></i> Home</a>
                                 </li>
-                             
+                                <li class="nav-item " data-bs-dismiss="offcanvas">
+                                    <a class="nav-link" target="content_frame" href="complaint_box.php"> <i
+                                            class="fas fa-plus"></i> New</a>
+                                </li>
                                 <li class="nav-item " data-bs-dismiss="offcanvas">
                                     <a class="nav-link " aria-current="page" target="content_frame"
-                                        href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                                        href="PROFILE.html"><i class="fas fa-user"></i> Profile</a>
                                 </li>
                                 <li class="nav-item " data-bs-dismiss="offcanvas" onclick="Logout()">
                                     <a class="nav-link " aria-current="page"><i class="fas fa-sign-out-alt"></i>
@@ -93,24 +82,29 @@
                                     <div class="nav-link border-1 border-black">
                                         <button class="  btn btn-sm  dropdown-toggle  text-capitalize nav-link  p-0 m-0"
                                             type="button" id="alerts" data-bs-toggle="dropdown" aria-expanded="false">
-                                            cOMPLAINTS
+                                            Problems
                                         </button>
 
                                         <ul class="dropdown-menu border-0 " aria-labelledby="alerts">
-                                            <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link" href="reported.html" target="content_frame">
-                                                    <i class="fas fa-clock"></i> REPORTS
+                                            <li class="dropdown-item nav-item   text-dark " data-bs-dismiss="offcanvas">
+                                                <a class="nav-link " href="Pending.html" target="content_frame">
+                                                    <i class="fas fa-home"></i> PENDING
                                                 </a>
                                             </li>
                                             <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link" href="solved.html" target="content_frame">
+                                                <a class="nav-link" href="Reported.html" target="content_frame">
+                                                    <i class="fas fa-clock"></i> REPORTED
+                                                </a>
+                                            </li>
+                                            <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
+                                                <a class="nav-link" href="SOLVED.html" target="content_frame">
                                                     <i class="fas fa-check"></i> SOLVED
                                                 </a>
                                             </li>
 
                                             <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link" href="alerts.html" target="content_frame">
-                                                    <i class="fas fa-bell"></i> OVERVIEW
+                                                <a class="nav-link" href="Alerts.html" target="content_frame">
+                                                    <i class="fas fa-bell"></i> Alerts
                                                 </a>
                                             </li>
                                         </ul>
@@ -136,6 +130,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 </body>
+
 
 <script>
     const Logout = () => {
@@ -169,5 +164,4 @@
 
 
 </script>
-
 </html>
