@@ -19,14 +19,14 @@ if ($conn && !(isset($_SESSION['dorm']) && isset($_SESSION['phone']))) {
 		$_SESSION['sname'] = $data['SNAME'];
     }
 }
-echo json_encode($_SESSION);
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="navbar.css" />
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <div class="] flex min-w-[350px] flex-col items-center justify-center bg-violet-200 px-2 py-3  max-sm:max-w-[100%] h-100">
@@ -67,7 +67,7 @@ echo json_encode($_SESSION);
 			const name=$('#name').val();
 			const phone=$('#phone').val();
 			const dorm=$('#dorm').val();
-			window.parent.console.log(name,phone,dorm);
+			//window.parent.console.log(name,phone,dorm);
 			if(name!=='' && phone>6000000000 && phone<9999999999 && dorm!==''){
 				$.ajax({
 						url: "../api/student_api/updateProfile.php",
@@ -76,7 +76,12 @@ echo json_encode($_SESSION);
 						dataType:'json',
 						beforeSend:()=>window.parent.console.log("sending...."),
 						success: function (data) {
-							window.parent.console.log(data);
+							swal({
+									text: data.text,
+									icon: data.icon,
+									timer: 1200,
+									button: false,
+									});
 						},
 						complete:()=>window.console.log('complete...'),
 						error: function (jqXHR, textStatus, errorThrown) {
