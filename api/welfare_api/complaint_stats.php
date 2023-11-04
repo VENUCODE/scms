@@ -17,7 +17,7 @@ if (isset($_SESSION['wfid']) && $conn) {
         
         if ($result) {
             $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
+        }
         
         $newData = json_encode($data);
         
