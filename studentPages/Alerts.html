@@ -164,7 +164,7 @@
         console.log('conforming complaint....')
         swal({
           title: "CONFIRMING....",
-          allowEscapeKey: false,
+          cliseOnEscape: false,
           allowOutsideClick: false,
           button: false,
           icon: "../imgs/loading.svg",
@@ -193,6 +193,6 @@
   $("#solve_confirmation").on("click", function () {
     var cid = $(this).data("cid");
     console.log(cid)
-    //complaintSolved(cid);
+    complaintSolved(cid);
   });
 </script>

@@ -63,7 +63,7 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav  gap-2  mb-2 mb-lg-0">
                                 <li class="nav-item " data-bs-dismiss="offcanvas">
-                                    <a class="nav-link " aria-current="page" target="_self" href="homepage.php"><i
+                                    <a class="nav-link " aria-current="page" target="_self" href="index.php"><i
                                             class="fas fa-home"></i> Home</a>
                                 </li>
                                 <li class="nav-item " data-bs-dismiss="offcanvas">
@@ -72,7 +72,7 @@
                                 </li>
                                 <li class="nav-item " data-bs-dismiss="offcanvas">
                                     <a class="nav-link " aria-current="page" target="content_frame"
-                                        href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                                        href="PROFILE.html"><i class="fas fa-user"></i> Profile</a>
                                 </li>
                                 <li class="nav-item " data-bs-dismiss="offcanvas" onclick="Logout()">
                                     <a class="nav-link " aria-current="page"><i class="fas fa-sign-out-alt"></i>

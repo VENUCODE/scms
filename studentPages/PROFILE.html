@@ -39,6 +39,7 @@
           <h5 class="text-slate-400 mb-3 text-sm" id="student_idnumber"></h5>
           <h5 class="text-slate-400 mb-1" id="student_branch"></h5>
           <h5 class="text-slate-400 mb-1" id="student_phone"></h5>
+          <h5 class="text-slate-400 mb-1" id="student_dorm"></h5>
           <br />
           <a
             href="UPDATE.php"
@@ -65,14 +66,16 @@
   const branch = document.getElementById("student_branch");
   const phone = document.getElementById("student_phone");
   const total = document.getElementById("count_container");
+  const dorm = document.getElementById("student_dorm");
   var source = new EventSource("../api/student_api/student_data.php");
   source.onmessage = (response) => {
-    //window.parent.console.log(response);
+    window.parent.console.log(response);
     var data = JSON.parse(response.data);
-    //window.parent.console.log(data);
+    window.parent.console.log(data);
     name.textContent = data.SNAME;
     idnumber.textContent = data.SID;
     branch.textContent = data.BRANCH;
+    dorm.textContent = data.DORM;
     data.SPHONE?phone.textContent=data.SPHONE:phone.textContent='No Contact'
     total.innerHTML = `
         <div class="max-md:col-6 flex flex-row  justify-around px-3 gap-0 ">

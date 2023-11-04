@@ -6,7 +6,7 @@ $(document).ready(() => {
     var usermode = $("#usermode").html();
     if ($("#email")[0].checkValidity()) {
       $.ajax({
-        url: "api/login_authenticate.php",
+        url: "api/login_auth.php",
         type: "POST",
         data: {
           email: email,

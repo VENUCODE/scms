@@ -62,7 +62,7 @@
           </button>
           <button
             type="button"
-            id="solve_confirmation"
+            id="respond"
             class="btn bg-emerald-200 text-emerald-600 hover:bg-emerald-600 hover:text-emerald-100 hover:shadow"
           >
             SOLVED
@@ -114,7 +114,7 @@
             `<h4 class='text-indigo-900'><span class='text-indigo-600'> RAISED ON: </span>${data.RAISED_ON}</h4>`
           );
           $("#complaintDescription").html(data.DESCRIPTION);
-          $("#solve_confirmation").data("cid", data.CID);
+          $("#respond").data("cid", data.CID);
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -122,7 +122,7 @@
       },
     });
   };
-  var source = new EventSource("../api/student_api/alerts.php");
+  var source = new EventSource("../api/warden_api/alerts.php");
   source.onmessage = (e) => {
     var data = JSON.parse(e.data);
     window.parent.console.log(data);
@@ -155,12 +155,12 @@
   // function to confirm complaint solved
   const complaintSolved = (cid) => {
     $.ajax({
-      url: "../api/student_api/complaintSolved.php",
+      url: "../api/warden_api/complaintSolved.php",
       type: "POST",
       data: { cid: cid },
       dataType:'json',
       beforeSend: () => {
-        // Show loading indicator here
+        console.log('conforming complaint....')
         swal({
           title: "CONFIRMING....",
           allowEscapeKey: false,
@@ -178,9 +178,9 @@
           icon: data.icon,
           timer: 1200,
           button: false,
+        }).then(()=>{
+          $("#detailDismiss").click();
         });
-        $("#detailDismiss").click();
-
       },
       error: function (err) {
         window.parent.console.log(err);
@@ -188,8 +188,9 @@
     });
   };
   //triggering confirmation
-  $("#solve_confirmation").on("click", function () {
-    var cid = $(this).data("cid");
+  $("#respond").on("click", function (e) {
+    cid = $(this).data("cid");
+    window.parent.console.log(cid)
     complaintSolved(cid);
   });
 </script>

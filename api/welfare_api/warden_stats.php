@@ -5,14 +5,15 @@ header('Cache-Control: no-store');
 header('Content-Type: text/event-stream');
 header('Connection: keep-alive');
 include("../connection.php");
-if (isset($_SESSION['sid']) && $conn) {
+
+if (isset($_SESSION['wfid']) && $conn) {
     session_write_close();
     $p = '';
     while(true) {
-        $sql = "SELECT (@row_number := @row_number + 1) AS SNO, `CID`, `DESCRIPTION`, `CTYPE`, DATE_FORMAT(`RAISED_ON`, '%d/%m/%y %h:%i %p') AS RAISE_DATE 
-        FROM `COMPLAINTS`, (SELECT @row_number := 0) AS t 
-        WHERE  `RAISED_ID` = '" . $_SESSION['sid'] . " ' AND RESPONSE_STATUS='FALSE'
-        ORDER BY `RAISE_DATE` DESC";
+        $sql = "SELECT wd.WID, COALESCE(SUM(CASE WHEN c.CONFIRMATION_STATUS = 'true' THEN 1 ELSE 0 END), 0) AS SolvedComplaintsCount
+        FROM warden_details wd
+        LEFT JOIN COMPLAINTS c ON wd.WID = c.SOLVED_BY
+        GROUP BY wd.WID";
             
         $result = mysqli_query($conn, $sql);
         $data = array();    

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>charts</title>
+    
+</script>
+</head>
+<body>
+    <html>
+        <head>
+          <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+          <script src="https://cdn.anychart.com/releases/v8/js/anychart-cartesian-3d.min.js"></script>
+          <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+          <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+          <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+          <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+          <style type="text/css">
+        
+            html,
+            body,
+            #container {
+              width:30rem;
+              height: 30rem;
+              margin: 0;
+              padding: 0;
+            }
+          
+        </style>
+        </head>
+        <body>
+          
+          <div id="container"></div>
+          
+        
+          <script>
+        
+            anychart.onDocumentReady(function () {
+              // create column chart
+              var chart = anychart.column3d();
+        
+              // turn on chart animation
+              chart.animation(true);
+        
+              // set chart title text settings
+              chart.title('Problems Solved by Wardens');
+        
+              chart.column([
+                ['Rouge', '80540'],
+                ['Foundation', '94190'],
+                ['Mascara', '102610'],
+        
+              ]);
+        
+              chart
+                .tooltip()
+                .position('center-top')
+                .anchor('center-bottom')
+                .offsetX(0)
+                .offsetY(10)
+                .format('{%Value} solved');
+        
+              // set scale minimum
+              chart.yScale().minimum(0);
+        
+              // set yAxis labels formatter
+              chart.yAxis().labels().format('{%Value}{groupsSeparator: }');
+        
+              chart.tooltip().positionMode('point');
+              chart.interactivity().hoverMode('by-x');
+              chart.xAxis().title('Wardens');
+              chart.yAxis().title('No of problems');
+        
+              // set container id for the chart
+              chart.container('container');
+              chart.draw();
+            });
+            const elements = Array.from(document.getElementsByClassName("anychart-credits"));
+            elements.forEach((item) => {
+            item.style.display = 'none';
+            });
+        </script>
+        </body>
+        </html>
+                        
+</body>
+</html>

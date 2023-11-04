@@ -1,8 +1,8 @@
 <?php 
-    // session_start();
-    // if(!(isset($_SESSION['sid']) && $_SESSION['usermode']=='STUDENT') && time()-$_SESSION[$_SESSION['sid'].'-login_time']>= 1800){
-    // header ('Location: ../api/logout.php');
-    // }
+    session_start();
+    if(!(isset($_SESSION['wid']) && $_SESSION['usermode']=='WARDEN') && time()-$_SESSION[$_SESSION['wid'].'-login_time']>= 1800){
+    header ('Location: ../api/logout.php');
+    }
 
 ?>
 <html lang="en">
@@ -63,13 +63,10 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav  gap-2  mb-2 mb-lg-0">
                                 <li class="nav-item " data-bs-dismiss="offcanvas">
-                                    <a class="nav-link " aria-current="page" target="_self" href="homepage.php"><i
+                                    <a class="nav-link " aria-current="page" target="_self" href="index.php"><i
                                             class="fas fa-home"></i> Home</a>
                                 </li>
-                                <li class="nav-item " data-bs-dismiss="offcanvas">
-                                    <a class="nav-link" target="content_frame" href="complaint_box.php"> <i
-                                            class="fas fa-plus"></i> New</a>
-                                </li>
+                            
                                 <li class="nav-item " data-bs-dismiss="offcanvas">
                                     <a class="nav-link " aria-current="page" target="content_frame"
                                         href="PROFILE.html"><i class="fas fa-user"></i> Profile</a>
@@ -86,11 +83,7 @@
                                         </button>
 
                                         <ul class="dropdown-menu border-0 " aria-labelledby="alerts">
-                                            <li class="dropdown-item nav-item   text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link " href="Pending.html" target="content_frame">
-                                                    <i class="fas fa-home"></i> PENDING
-                                                </a>
-                                            </li>
+                                        
                                             <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
                                                 <a class="nav-link" href="Reported.html" target="content_frame">
                                                     <i class="fas fa-clock"></i> REPORTED
@@ -103,7 +96,7 @@
                                             </li>
 
                                             <li class="dropdown-item nav-item  text-dark " data-bs-dismiss="offcanvas">
-                                                <a class="nav-link" href="Alerts.html" target="content_frame">
+                                                <a class="nav-link" href="./warden_alerts.html" target="content_frame">
                                                     <i class="fas fa-bell"></i> Alerts
                                                 </a>
                                             </li>
@@ -120,7 +113,7 @@
     </header>
     <!-- navbar-section-close -->
     <div class=" relative flex h-[100vh] flex-row  w-[100vw] mt-0 overflow-y-scroll ">
-        <iframe src="left.html" class="max-md:hidden relative " frameborder="0" class="flex-1 max-w-m" width="200px"
+        <iframe src="./warden_leftbar.html" class="max-md:hidden relative " frameborder="0" class="flex-1 max-w-m" width="200px"
             height="100%" name="sidebar"></iframe>
 
         <iframe src="landing.html" id="content" class="min-w-max max-md:ps-0 px-[1px]" width="100%" frameborder="0" class="flex-4"

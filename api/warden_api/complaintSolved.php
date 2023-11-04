@@ -5,11 +5,17 @@ if(!(isset($_SESSION['usermode']))){
     exit;
 }
 include("../connection.php");
+echo(isset($_SESSION['wid']));
 $data=array();
-if($conn && isset($_POST['cid']) && isset($_SESSION['sid'])){
+
+if($conn 
+&& isset($_POST['cid'])
+ && 
+isset($_SESSION['wid'])
+){
     $CID=$_POST['cid'];
-    $SID=$_SESSION['sid'];
-    $sql="UPDATE COMPLAINTS SET CONFIRMATION_STATUS='TRUE',SOLVED_ON=now() WHERE CID='{$CID}' and RAISED_ID='{$SID}' and SOLVED_ON IS NOT NULL";
+    $WID=$_SESSION['wid'];
+    $sql="UPDATE COMPLAINTS SET RESPONSE_STATUS='TRUE',SOLVED_ON=now(),SOLVED_BY='{$WID}' WHERE CID={$CID} AND CONFIRMATION_STATUS='FALSE'";
     $result=mysqli_query($conn,$sql);
     if ($result) {
         $response = array(

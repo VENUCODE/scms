@@ -10,8 +10,8 @@
   crossorigin="anonymous"
 ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
-<div class="w-full max-md:px-2 max-sm:px-1 px-3 bg-amber-100">
 <div class="w-full">
   <div
     class="modal fade"
@@ -23,10 +23,10 @@
   >
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
-        <div class="modal-header text-amber-50 bg-amber-700">
-          <h1 class="modal-title text-md text-amber-300">
+        <div class="modal-header text-orange-50 bg-orange-700">
+          <h1 class="modal-title text-md text-orange-300">
             CATEGORY:
-            <span id="detailType" class="uppercase text-amber-100"></span>
+            <span id="detailType" class="uppercase text-orange-100"></span>
           </h1>
           <button
             type="button"
@@ -36,21 +36,37 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body bg-amber-200">
+        <div class="modal-body bg-orange-200">
           <div
             id="dateRaised"
-            class="bg-amber-200 text-amber-600 font-bolder"
+            class="bg-orange-200 text-orange-600 font-bolder"
           ></div>
           <hr />
           <hr />
-          <div class="mt-2 bg-amber-300 rounded-md px-3 py-3">
+          <div class="mt-2 bg-orange-300 rounded-md px-3 py-3">
             <p class="font-bold">Description:</p>
             <hr />
             <p
               id="complaintDescription"
-              class="text-md font-medium px-2 py-3 text-amber-800 whitespace-nowrap first-letter:uppercase"
+              class="text-md font-medium px-2 py-3 text-orange-800 whitespace-nowrap first-letter:uppercase"
             ></p>
           </div>
+        </div>
+        <div class="modal-footer justify-around px-2">
+          <button
+            type="button"
+            class="btn bg-amber-200 text-amber-700 hover:bg-amber-900 hover:text-amber-100"
+            data-bs-dismiss="modal"
+          >
+            NOT SOLVED
+          </button>
+          <button
+            type="button"
+            id="solve_confirmation"
+            class="btn bg-emerald-200 text-emerald-600 hover:bg-emerald-600 hover:text-emerald-100 hover:shadow"
+          >
+            SOLVED
+          </button>
         </div>
       </div>
     </div>
@@ -60,7 +76,7 @@
   <div
     class="sticky flex-1 top-0 py-2 w-full mx-2 my-3 rounded-3 text-center uppercase bg-orange-200 text-ornage-900 font-bolder"
   >
-    REPORTED COMPLAINTS
+    RECENT UPDATES
   </div>
   <table
     data-bs-theme="dark"
@@ -79,22 +95,26 @@
     </thead>
     <tbody id="list-items"></tbody>
   </table>
-</div></div>
+</div>
 <script>
   const handleViewComplaint = (id) => {
     $.ajax({
       url: "../api/commonApi/complaintDetails.php",
       type: "POST",
       data: { complaintId: id },
-
+      beforeSend: () => {
+        window.parent.console.log("Sending....");
+      },
+      complete: () => window.parent.console.log("Completed"),
       success: function (data) {
         data = JSON.parse(data);
         if (data.status) {
           $("#detailType").html(data.CTYPE);
           $("#dateRaised").html(
-            `<h4 class='text-amber-900'><span class='text-amber-600'> RAISED ON: </span>${data.RAISED_ON}</h4>`
+            `<h4 class='text-orange-900'><span class='text-orange-600'> RAISED ON: </span>${data.RAISED_ON}</h4>`
           );
           $("#complaintDescription").html(data.DESCRIPTION);
+          $("#solve_confirmation").data("cid", data.CID);
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -105,51 +125,21 @@
   var source = new EventSource("../api/student_api/reported_complaints.php");
   source.onmessage = (e) => {
     var data = JSON.parse(e.data);
+    window.parent.console.log(data);
     const cont = document.querySelector("#list-items");
     cont.innerHTML = "";
-    
     data.forEach((e) => {
-      // Create the elements
-      const row = document.createElement("tr");
-      row.className = "bg-orange-50 text-orange-300 border-b dark:bg-orange-800 dark:border-orange-700";
-    
-      const snoCell = document.createElement("th");
-      snoCell.scope = "row";
-      snoCell.className = "px-1 py-4 font-medium text-center text-orange-100 whitespace-nowrap dark:text-white";
-      snoCell.textContent = e.SNO;
-    
-      const ctypeCell = document.createElement("td");
-      ctypeCell.className = "max-sm:px-1 px-4 py-4 first-letter:uppercase";
-      ctypeCell.textContent = e.CTYPE;
-    
-      const descriptionCell = document.createElement("td");
-      descriptionCell.className = "max-sm:px-1 px-4 py-4 truncate ... first-letter:uppercase";
-      descriptionCell.textContent = e.DESCRIPTION;
-    
-      const raiseDateCell = document.createElement("td");
-      raiseDateCell.className = "max-sm:px-1 px-4 py-4";
-      raiseDateCell.textContent = e.RAISE_DATE;
-    
-      const buttonCell = document.createElement("td");
-      const button = document.createElement("button");
-      button.id = e.CID;
-      button.setAttribute("data-bs-toggle", "modal");
-      button.setAttribute("data-bs-target", "#showDetails");
-      button.className = 'details bg-orange-500 text-slate-200 maxsm:px-1 px-4 py-1 hover:bg-orange-600 hover:text-slate-100 rounded-sm hover:shadow-sm rounded-sm';
-      button.textContent = "VIEW";
-    
-      // Append the cells to the row
-      row.appendChild(snoCell);
-      row.appendChild(ctypeCell);
-      row.appendChild(descriptionCell);
-      row.appendChild(raiseDateCell);
-      buttonCell.appendChild(button);
-      row.appendChild(buttonCell);
-    
-      // Append the row to the container
-      cont.appendChild(row);
+      cont.innerHTML += ` 
+                <tr class="bg-orange-50 text-orange-300 border-b dark:bg-orange-800 dark:border-orange-700">
+                  <th scope="row" class="px-1 py-4 font-medium text-center text-orange-100 whitespace-nowrap dark:text-white">${e.SNO}</th>
+                  <td class="max-sm:px-1 px-4 py-4 first-letter:uppercase">${e.CTYPE}</td>
+                  <td class="max-sm:px-1 px-4 py-4 truncate ... first-letter:uppercase"> ${e.DESCRIPTION}</td>
+                  <td class="max-sm:px-1 px-4 py-4">${e.RAISE_DATE}</td>
+                  <td class="max-sm:px-1 px-4 py-4">
+                  <button id="${e.CID}" data-bs-toggle="modal" data-bs-target="#showDetails" class='details bg-orange-500 text-slate-200 maxsm:px-1 px-4 py-1 hover:bg-orange-600 hover:text-slate-100 rounded-sm hover:shadow-sm rounded-sm'>VIEW</button>
+                  </td>
+                  </tr>`;
     });
-    
     var delete_buttons = document.getElementsByClassName("details");
     Array.from(delete_buttons).forEach((item) => {
       item.addEventListener("click", (e) => {
@@ -161,5 +151,48 @@
     $("#detailType").html("");
     $("#dateRaised").html("");
     $("#complaintDescription").html("");
+  });
+  // function to confirm complaint solved
+  const complaintSolved = (cid) => {
+    $.ajax({
+      url: "../api/student_api/complaintSolved.php",
+      type: "POST",
+      data: { cid: cid },
+      dataType:'json',
+      beforeSend: () => {
+        // Show loading indicator here
+        console.log('conforming complaint....')
+        swal({
+          title: "CONFIRMING....",
+          cliseOnEscape: false,
+          allowOutsideClick: false,
+          button: false,
+          icon: "../imgs/loading.svg",
+        });
+      },
+      complete: () => {
+        swal.close();
+      },
+      success: function (data) {
+        console.log("confirmation done");
+        swal({
+          text: data.text,
+          icon: data.icon,
+          timer: 1200,
+          button: false,
+        });
+        $("#detailDismiss").click();
+
+      },
+      error: function (err) {
+        window.parent.console.log(err);
+      },
+    });
+  };
+  //triggering confirmation
+  $("#solve_confirmation").on("click", function () {
+    var cid = $(this).data("cid");
+    console.log(cid)
+    complaintSolved(cid);
   });
 </script>

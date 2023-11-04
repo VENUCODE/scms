@@ -6,13 +6,13 @@ if (!isset($_SESSION['usermode'])) {
 }
 include("../connection.php");
 $data = array();
-if ($conn && isset($_SESSION['sid']) ) {
+if ($conn && isset($_SESSION['wid']) ) {
     $name = $_POST['name'];
     $phone = $_POST['phone'];
-    $dorm = $_POST['dorm'];
-    $SID = $_SESSION['sid'];
+    $dorm = $_POST['shift'];
+    $WID = $_SESSION['wid'];
 
-    $sql = "UPDATE student_details SET SNAME='{$name}', SPHONE='$phone', DORM='$dorm' WHERE SID='$SID'";
+    $sql = "UPDATE warden_details SET WNAME='{$name}', WPHONE='$phone', WSHIFT='$dorm' WHERE WID='$WID'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         $_SESSION['phone'] = $phone;

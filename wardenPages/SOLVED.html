@@ -80,9 +80,9 @@
     >
       <tr>
         <th scope="col" class="max-sm:px-1 px-4 py-3">SNO</th>
-        <th scope="col" class="max-sm:px-1 px-4 py-3">CATEGORY</th>
-        <th scope="col" class="max-sm:px-1 px-4 py-3">DESCRIPTION</th>
         <th scope="col" class="max-sm:px-1 px-4 py-3">RAISED_ON</th>
+        <th scope="col" class="max-sm:px-1 px-4 py-3">DESCRIPTION</th>
+        <th scope="col" class="max-sm:px-1 px-4 py-3">SOLVED_ON</th>
         <th scope="col" class="max-sm:px-1 px-4 py-3">VIEW</th>
       </tr>
     </thead>
@@ -116,7 +116,7 @@
       },
     });
   };
-  var source = new EventSource("../api/student_api/solved_complaints.php");
+  var source = new EventSource("../api/warden_api/solved_complaints.php");
   source.onmessage = (e) => {
     var data = JSON.parse(e.data);
     window.parent.console.log(data);
@@ -134,7 +134,7 @@ data.forEach((e) => {
 
   const ctypeCell = document.createElement("td");
   ctypeCell.className = "max-sm:px-1 px-4 py-4 first-letter:uppercase";
-  ctypeCell.textContent = e.CTYPE;
+  ctypeCell.textContent = e.RAISE_DATE;
 
   const descriptionCell = document.createElement("td");
   descriptionCell.className = "max-sm:px-1 px-4 py-4 truncate ... first-letter:uppercase";
@@ -142,7 +142,7 @@ data.forEach((e) => {
 
   const raiseDateCell = document.createElement("td");
   raiseDateCell.className = "max-sm:px-1 px-4 py-4";
-  raiseDateCell.textContent = e.RAISE_DATE;
+  raiseDateCell.textContent = e.SOLVED_ON;
 
   const buttonCell = document.createElement("td");
   const button = document.createElement("button");

@@ -33,19 +33,19 @@ if ($conn) {
                     $_SESSION['warden_mail'] = $email;
                     $_SESSION['wid'] = substr($email, 0, 4);
                     $_SESSION[$_SESSION['wid'] . '-login_time'] = time(); 
-                    echo json_encode(['redirect' => './wardenPages/homepage.php']);
+                    echo json_encode(['redirect' => './wardenPages/']);
                     break;
                 case 'STUDENT':
                     $_SESSION['student_mail'] = $email;
                     $_SESSION['sid'] = substr($email, 0, 7);
                     $_SESSION[$_SESSION['sid'] . '-login_time'] = time(); 
-                    echo json_encode(['redirect' => './studentPages/homepage.php']);
+                    echo json_encode(['redirect' => './studentPages/']);
                     break;
                 case 'STUDENT WELFARE':
                     $_SESSION['welfare_mail'] = $email;
                     $_SESSION['wfid'] = substr($email, 0, 5);
                     $_SESSION[$_SESSION['wfid'] . '-login_time'] = time(); 
-                    echo json_encode(['redirect' => './welfarePages/homepage.php']);
+                    echo json_encode(['redirect' => './welfarePages/']);
                     break;
                 default:
                     echo json_encode(['error' => 'Invalid Details']);

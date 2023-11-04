@@ -1,6 +1,7 @@
 <!-- bootstrap files-->
 <?php 
 session_start();
+print_r($_SESSION);
 ?>
 <link
   rel="stylesheet"
@@ -113,7 +114,6 @@ session_start();
             swal.close();
           },
           success: function (data) {
-            // Show success message
             swal({
               text: data.text,
               icon: data.icon,
