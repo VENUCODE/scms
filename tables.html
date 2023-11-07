@@ -1,0 +1,185 @@
+<head>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="assets/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/assets/css/style.css" rel="stylesheet"> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="w-full">
+    <div
+      class="modal fade"
+      id="showDetails"
+      data-bs-backdrop="true"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header text-lime-50 bg-lime-700">
+            <h1 class="modal-title text-md text-lime-300">
+              CATEGORY:
+              <span id="detailType" class="uppercase text-lime-100"></span>
+            </h1>
+            <button
+              type="button"
+              class="px-2 hover:text-slate-100 text-slate-900"
+              id="detailDismiss"
+              data-bs-dismiss="modal"
+              aria-label="Close"><span class="text-[35px]  font-bolder ">&#215;</span></button>
+          </div>
+          <div class="modal-body bg-lime-200">
+            <div
+              id="dateRaised"
+              class="bg-lime-200 text-lime-600 font-bolder"
+            ></div>
+            <hr />
+            <hr />
+            <div class="mt-2 bg-lime-300 rounded-md px-3 py-3">
+              <p class="font-bold">Description:</p>
+              <hr />
+              <p
+                id="complaintDescription"
+                class="text-md font-medium px-2 py-3 text-lime-800 whitespace-nowrap first-letter:uppercase"
+              ></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="section">
+    <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">SOLVED COMPLAINTS</h5>
+          <p>The Solved complaints will appear here</p>
+          
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+              <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Category</th>
+                <th scope="col">Description</th>
+                <th scope="col">Solved On</th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+       
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script>
+  
+  const handleViewComplaint = (id) => {
+    var xhr = new XMLHttpRequest();
+    var url = "./api/commonApi/complaintDetails.php";
+    var params = "complaintId=" + id;
+
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var data = JSON.parse(xhr.responseText);
+          if (data.status) {
+            document.getElementById("detailType").innerHTML = data.CTYPE;
+            document.getElementById("dateRaised").innerHTML = "<h4 class='text-lime-900'><span class='text-lime-600'> RAISED ON: </span>" + data.RAISED_ON + "</h4>";
+            document.getElementById("complaintDescription").innerHTML = data.DESCRIPTION;
+          }
+        } else {
+          console.error("Ajax request failed: " + xhr.statusText);
+        }
+      }
+    };
+
+    xhr.send(params);
+  };
+  var source = new EventSource("./api/student_api/solved_complaints.php");
+  source.onmessage = function (e) {
+    var data = JSON.parse(e.data);
+    window.parent.console.log(data);
+  
+    var cont = document.querySelector("tbody");
+    cont.innerHTML = '';
+  
+    data.forEach(function (e) {
+      var row = document.createElement("tr");
+  
+      var snoCell = document.createElement("th");
+      snoCell.setAttribute("scope", "row");
+      snoCell.textContent = e.SNO;
+  
+      var ctypeCell = document.createElement("td");
+      ctypeCell.textContent = e.CTYPE;
+  
+      var descriptionCell = document.createElement("td");
+      descriptionCell.textContent = e.DESCRIPTION;
+  
+      var raiseDateCell = document.createElement("td");
+      raiseDateCell.textContent = e.RAISE_DATE;
+  
+      var buttonCell = document.createElement("td");
+      var button = document.createElement("button");
+      button.id = e.CID;
+      button.setAttribute("data-bs-toggle", "modal");
+      button.setAttribute("data-bs-target", "#showDetails");
+      button.className = 'details bg-teal-500 text-slate-200 maxsm:px-1 px-4 py-1 hover:bg-teal-600 hover:text-slate-100 rounded-sm hover:shadow-sm rounded-sm';
+      button.textContent = "VIEW";
+  
+      button.addEventListener("click", function (e) {
+        window.parent.console.log(e.currentTarget.id);
+        handleViewComplaint(e.currentTarget.id);
+      });
+  
+      row.appendChild(snoCell);
+      row.appendChild(ctypeCell);
+      row.appendChild(descriptionCell);
+      row.appendChild(raiseDateCell);
+      buttonCell.appendChild(button);
+      row.appendChild(buttonCell);
+      cont.appendChild(row);
+    });
+  };
+  
+  var detailDismiss = document.getElementById("detailDismiss");
+  detailDismiss.addEventListener("click", function () {
+    var detailType = document.getElementById("detailType");
+    var dateRaised = document.getElementById("dateRaised");
+    var complaintDescription = document.getElementById("complaintDescription");
+  
+    detailType.innerHTML = "";
+    dateRaised.innerHTML = "";
+    complaintDescription.innerHTML = "";
+  });
+  
+</script>
+<script src="assets/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="assets/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/assets/vendor/tinymce/tinymce.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.2/tinymce.min.js" integrity="sha512-AHsE0IVoihNpGako20z2Tsgg77r5h9VS20XIKa+ZZ8WzzXxdbiUszgVUmXqpUE8GVUEQ88BKQqtlB/xKIY3tUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<!-- Template Main JS File -->
+<script src="assets/assets/js/main.js"></script>
+
+</body>
